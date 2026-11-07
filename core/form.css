@@ -377,6 +377,44 @@ box-shadow: inset 0 -2px 0 #eb9a2f !important;
 background-color: #d3e3ff !important;
 box-shadow: inset 0 -3px 0 #1d5fd6 !important;
 }
+.g-pass-row {
+display: flex;
+gap: 8px;
+}
+.g-pass-input {
+flex: 1 1 auto;
+min-width: 0;
+height: 40px;
+padding: 0 14px;
+font: inherit;
+color: var(--g-text);
+background: var(--g-bg);
+border: 1px solid var(--g-line);
+border-radius: 999px;
+text-align: center;
+}
+.g-pass-input:focus {
+outline: 2px solid var(--g-text);
+outline-offset: 2px;
+}
+.g-pass-row .g-btn {
+flex: none;
+min-height: 40px;
+padding: 0 16px;
+font-size: .95rem;
+}
+.g-pass .g-lock-error {
+margin: 6px 0 0;
+font-size: .85rem;
+}
+.g-pass-ask {
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 4px 10px;
+margin-top: 8px;
+font-size: .85rem;
+}
 .g-choice-list {
 display: flex;
 flex-direction: column;

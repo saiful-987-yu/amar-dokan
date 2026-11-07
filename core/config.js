@@ -1,6 +1,6 @@
 window.G = window.G || {};
 G.config = G.config || {};
-G.config.creator = 'Saiful';
+G.config.creator = 'Saiful Islam ( Chiam )';
 G.config.api = '';
 G.config.photo = 'assets/developer.jpg';
 G.config.social = {

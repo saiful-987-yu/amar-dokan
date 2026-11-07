@@ -21,7 +21,7 @@ var table = window.G_STRINGS || {};
 var lang = G.getLang();
 var text = (table[lang] && table[lang][key]) || (table.bn && table.bn[key]) || key;
 return text
-.replace('{name}', G.config.creator)
+.replace('{name}', (table[lang] && table[lang]['dev.name']) || G.config.creator)
 .replace('{year}', String(new Date().getFullYear()));
 };
 G.applyLang = function () {

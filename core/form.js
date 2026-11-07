@@ -183,6 +183,61 @@ var msg = G.t('lock.msg').replace('{form}', pick(META.title)).replace('{id}', ME
 link.setAttribute('href', base + '?text=' + encodeURIComponent(msg));
 box.hidden = false;
 }
+function needsPrintPass() {
+return !!(META && META.access === 'freemium' && !isUnlocked());
+}
+function openPrintLock(onDone) {
+var base = waLink();
+var handle = G.modal.open({
+title: G.t('lock.printTitle'),
+build: function (body, close) {
+var form = el('form', 'g-pass');
+var row = el('div', 'g-pass-row');
+var input = el('input', 'g-pass-input');
+input.type = 'password';
+input.autocomplete = 'off';
+input.placeholder = G.t('lock.placeholder');
+var btn = el('button', 'g-btn', G.t('lock.btn'));
+btn.type = 'submit';
+var error = el('p', 'g-lock-error', G.t('lock.wrong'));
+error.setAttribute('role', 'alert');
+error.hidden = true;
+row.appendChild(input);
+row.appendChild(btn);
+form.appendChild(row);
+form.appendChild(error);
+if (base && META) {
+var msg = G.t('lock.printMsg').replace('{form}', pick(META.title)).replace('{id}', META.id || '');
+var ask = el('div', 'g-pass-ask');
+ask.appendChild(el('span', 'g-lock-ask-text', G.t('lock.noPass')));
+var link = el('a', 'g-lock-ask-link', G.t('lock.ask'));
+link.setAttribute('href', base + '?text=' + encodeURIComponent(msg));
+link.target = '_blank';
+link.rel = 'noopener';
+ask.appendChild(link);
+form.appendChild(ask);
+}
+form.addEventListener('submit', function (e) {
+e.preventDefault();
+if (window.G.lock && G.lock.verify(SLUG, input.value)) {
+saveUnlocked();
+close(true);
+onDone();
+} else {
+error.hidden = false;
+input.select();
+}
+});
+body.appendChild(form);
+}
+});
+if (handle && handle.body) {
+var field = handle.body.querySelector('.g-pass-input');
+if (field) {
+field.focus();
+}
+}
+}
 function updateEye() {
 var eye = document.getElementById('g-lock-eye');
 var input = document.getElementById('g-lock-input');
@@ -493,6 +548,12 @@ toast(G.t('form.printSoon'));
 var list = document.querySelectorAll('.g-print-btn');
 for (var i = 0; i < list.length; i++) {
 list[i].addEventListener('click', function () {
+if (needsPrintPass()) {
+openPrintLock(function () {
+ask('print', print);
+});
+return;
+}
 ask('print', print);
 });
 }

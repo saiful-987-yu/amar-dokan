@@ -129,7 +129,7 @@ req.href = reqHref;
 }
 var nameBox = document.getElementById('g-dev-name');
 if (nameBox) {
-nameBox.textContent = cfg.creator || '';
+nameBox.textContent = G.t('dev.name');
 }
 var photo = document.getElementById('g-dev-photo');
 if (photo) {
